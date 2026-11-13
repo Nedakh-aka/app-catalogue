@@ -38,4 +38,23 @@ df_selection = df_selection[df_selection["prix_gbp"] >= prix_min]
 df_selection = df_selection[df_selection["prix_gbp"] <= prix_max]
 df_selection = df_selection[df_selection["note"] >= note_minimal]
 
+col1, col2, col3, col4 = st.columns(4)
+
+col1.metric("Livres retenus", f"{df_selection.shape[0]} / {df.shape[0]}")
+col2.metric("Prix moyen", f"{df_selection["prix_gbp"].mean():.2f} £")
+col3.metric("Note moyenne", f"{df_selection["note"].mean():.2f} / 5")
+col4.metric("Exemplaires en stock", df_selection["stock"].sum())
+
 st.dataframe(df_selection)
+
+gauche, droite = st.columns(2)
+
+with gauche:
+    df_mieux_note = df_selection.nlargest(5, "note")[["titre", "note"]]
+    st.subheader(f"Les {df_mieux_note.shape[0]} mieux notés")
+    st.dataframe(df_mieux_note)
+
+with droite:
+    df_moins_cher = df_selection.nsmallest(5, "prix_gbp")[["titre", "prix_gbp"]]
+    st.subheader(f"Les {df_moins_cher.shape[0]} moins cher")
+    st.dataframe(df_moins_cher)
