@@ -42,7 +42,7 @@ def _afficher_filtres(df):
         st.header("Filtres")
         note_min = st.slider("Note minimale", 1, 5, 1)
         minimum = 0.0
-        maximum = float(math.ceil(df["prix_gbp"].max())) if df.empty else 50.0
+        maximum = 50.0 if df.empty else float(math.ceil(df["prix_gbp"].max()))
         prix_min, prix_max = st.slider(
             "Fourchette de prix",
             minimum,
