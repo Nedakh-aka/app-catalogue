@@ -1,0 +1,1 @@
+FICHIER = "data/livres_poetry.csv"
